@@ -1,0 +1,14 @@
+CREATE DATABASE HOSTEL;
+use HOSTEL;
+CREATE TABLE Student(usn VARCHAR(12),name VARCHAR(20),paswd text,email VARCHAR(64),PRIMARY KEY(usn));
+CREATE TABLE Parent(usn VARCHAR(12),paswd VARCHAR(20),PRIMARY KEY(usn,FOREIGN KEY(usn) REFERENCES Student(usn) );
+CREATE TABLE Staff(id VARCHAR(12),name VARCHAR(20),paswd VARCHAR(20),PRIMARY KEY(id));
+CREATE TABLE Waden(id VARCHAR(12),name VARCHAR(20),paswd VARCHAR(20),PRIMARY KEY(id));
+CREATE TABLE Announcement(msg VARCHAR(1000));
+CREATE TABLE Remarks(staff_id VARCHAR(12),usn VARCHAR(12),msg VARCHAR(100),PRIMARY KEY(staff_id,usn),FOREIGN KEY (staff_id)REFERENCES Staff(id), FOREIGN KEY (usn)REFERENCES Student(usn));
+CREATE TABLE ROOM(r_no int , block VARCHAR(2),type_of_room VARCHAR(10),available int,PRIMARY KEY (r_no,block));
+CREATE TABLE Alloted_Room(r_no int ,block VARCHAR(2),usn VARCHAR(12),PRIMARY KEY(r_no,block,usn),FOREIGN KEY(r_no,block) REFERENCES ROOM(r_no,block),FOREIGN KEY(usn) REFERENCES Student(usn));
+CREATE TABLE Room_priority(usn VARCHAR(12),Room_Type VARCHAR(10),time_sec int,PRIMARY KEY(usn),FOREIGN KEY(usn) REFERENCES Student(usn));
+CREATE TABLE Coupon(id int,name VARCHAR(20),no_available int,PRIMARY KEY(id));
+CREATE TABLE Food_priority(usn VARCHAR(12),id int,Time_sec int,PRIMARY KEY(usn),FOREIGN KEY(usn) REFERENCES Student(usn),FOREIGN KEY(id) REFERENCES Coupon(id));
+CREATE TABLE Alloted_Coupon(usn VARCHAR(12),id int,PRIMARY KEY (usn),FOREIGN KEY(usn) REFERENCES Student(usn),FOREIGN KEY(id) REFERENCES Coupon(id)); 
